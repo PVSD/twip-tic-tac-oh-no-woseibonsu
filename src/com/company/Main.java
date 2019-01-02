@@ -1,23 +1,38 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
 
+        Board board = new Board();
+        Scanner kbinput = new Scanner(System.in);
+        boolean gameStatus = true;
+        boolean mark = false;
+        System.out.println(board.getBoard());
+        System.out.println("Pick an Option: " +
+                "\n1) Player vs Player" +
+                "\n2) Player vs Computer" +
+                "\n3) Player vs Computer");
 
+        if(kbinput.nextInt() == 1)
+        {
+            System.out.println( "When playing, select a position using this numbering: \n" +
+                    "  1 | 2 | 3  " +
+                    "\n————————\n  " +
+                    "4 | 5 | 6  " +
+                    "\n————————\n  " +
+                    "7 | 8 | 9  ");
+            System.out.println("Player 1 is X. Player 2 is O.");
 
-       char[][] board = new char[3][3];
-        char player;
-
-
-
-            System.out.println( board[0][0] + "|\t" + board[0][1] + "|"
-                    + board[0][2]);
-            System.out.println("-------");
-            System.out.println(board[1][0] + "|\t" + board[1][1] + "|"
-                    + board[1][2]);
-            System.out.println("-------");
-            System.out.println(board[2][0] + "|\t" + board[2][1] + "|"
-                    + board[2][2]);
+            while(gameStatus)
+            {
+                System.out.println("Slot: ");
+                board.makeMove(kbinput.nextInt(), mark);
+                mark = !mark;
+                System.out.println(board.getBoard());
+            }
+        }
     }
 }
