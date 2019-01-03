@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -10,28 +11,42 @@ public class Main {
         Scanner kbinput = new Scanner(System.in);
         boolean gameStatus = true;
         boolean mark = false;
-        System.out.println(board.getBoard());
-        System.out.println("Pick an Option: " +
+
+
+        System.out.print("Pick an Option: " +
                 "\n1) Player vs Player" +
                 "\n2) Player vs Computer" +
-                "\n3) Player vs Computer");
+                "\n3) Computer vs Computer" +
+                "\nOption: ");
 
         if(kbinput.nextInt() == 1)
         {
-            System.out.println( "When playing, select a position using this numbering: \n" +
-                    "  1 | 2 | 3  " +
-                    "\n————————\n  " +
-                    "4 | 5 | 6  " +
-                    "\n————————\n  " +
-                    "7 | 8 | 9  ");
-            System.out.println("Player 1 is X. Player 2 is O.");
+            Board.getExample();
+            System.out.println("Player 1 is X. Player 2 is 0.");
 
             while(gameStatus)
             {
-                System.out.println("Slot: ");
-                board.makeMove(kbinput.nextInt(), mark);
-                mark = !mark;
-                System.out.println(board.getBoard());
+                System.out.print("Slot: ");
+                try
+                {
+                    int slot = kbinput.nextInt();
+                    if (board.checkMovement(slot)) {
+                        board.makeMove(slot, mark);
+                        mark = !mark;
+                        board.getBoard();
+                    } else {
+                        System.out.println("That spot is taken. Try again.\n");
+                    }
+                } catch (InputMismatchException e)
+                {
+                    String slot = kbinput.next();
+                    if (slot.toLowerCase().equals("example"))
+                        Board.getExample();
+                    else
+                        System.out.println("That's not a proper input. Try again.");
+                }
+
+
             }
         }
     }
